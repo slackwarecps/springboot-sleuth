@@ -61,6 +61,16 @@ public class SleuthController {
     }
 
 
+    @GetMapping("/async")
+    public String helloSleuthAsync() throws InterruptedException {
+        logger.info("Before Async Method Call");
+        sleuthService.asyncMethod();
+        logger.info("After Async Method Call");
+
+        return "success";
+    }
+
+
 
 
 
