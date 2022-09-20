@@ -1,15 +1,23 @@
-package br.com.fabioalvaro.springbootsleuth;
+package br.com.fabioalvaro.springbootsleuth.controllers;
 
+import br.com.fabioalvaro.springbootsleuth.clients.CepService;
+import br.com.fabioalvaro.springbootsleuth.clients.dao.CepResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.slf4j.MDC;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.concurrent.Executor;
 
 @RestController
 public class SleuthController {
+
+    private final CepService cepService;
+
+    private Integer userId;
 
 
     @Autowired
@@ -21,12 +29,47 @@ public class SleuthController {
 
     Logger logger = LoggerFactory.getLogger(SleuthController.class);
 
-    @GetMapping("/piu")
-   public String helloSleuth(){
-        logger.info("Hello Sleuth, piu!");
-       return "success";
-
+    public SleuthController(CepService cepService) {
+        this.cepService = cepService;
+        this.userId = 000171;
     }
+
+
+
+
+
+    @GetMapping("/piu")
+   public String helloSleuth(
+           @RequestHeader(value = "x-correlation-id", required = false) String xCorrelationId){
+        logger.info("Hello Sleuth, piu!");
+        logger.info("Service-A is called with Correlation-Id: {}", xCorrelationId);
+        MDC.put("correlation.id", xCorrelationId);
+        MDC.put("sessao.id", "asdf-qwer-1234-poiu");
+
+        long startTime = System.currentTimeMillis();
+
+        try{
+            // Busca o cep
+            logger.info("Buscando o cep {}","13070028");
+            Thread.sleep(1000L);
+            CepResponse retorno = this.cepService.getCep("13070028x");
+            logger.info("Retorno cep : {}",retorno);
+        }catch(Exception e){
+            logger.error("Erro ao buscar CEP {} ",e);
+        }
+        long endtime = System.currentTimeMillis();
+        logger.info("Tempo gasto na chamada remota: " + (endtime-startTime) +"ms");
+
+
+       logger.info("Final do metodo..");
+        MDC.clear();
+       return "success PIU";
+    }
+
+
+
+
+
 
     @GetMapping("/same-span")
     public String helloSleuthSameSpan() throws InterruptedException {

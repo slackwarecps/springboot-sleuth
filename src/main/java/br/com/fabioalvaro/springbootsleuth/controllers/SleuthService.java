@@ -1,4 +1,4 @@
-package br.com.fabioalvaro.springbootsleuth;
+package br.com.fabioalvaro.springbootsleuth.controllers;
 
 
 import org.slf4j.Logger;
