@@ -52,7 +52,7 @@ public class SleuthController {
             // Busca o cep
             logger.info("Buscando o cep {}","13070028");
             Thread.sleep(1000L);
-            CepResponse retorno = this.cepService.getCep("13070028x");
+            CepResponse retorno = this.cepService.getCep("13070028");
             logger.info("Retorno cep : {}",retorno);
         }catch(Exception e){
             logger.error("Erro ao buscar CEP {} ",e);

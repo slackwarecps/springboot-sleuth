@@ -1,6 +1,8 @@
 package br.com.fabioalvaro.springbootsleuth.clients;
 
 import br.com.fabioalvaro.springbootsleuth.clients.dao.CepResponse;
+import feign.Headers;
+import feign.Param;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;

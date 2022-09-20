@@ -8,6 +8,8 @@ import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.UUID;
+
 @SuppressWarnings("ALL")
 @RestController
 @RequestMapping("/v1/ceps")
@@ -32,6 +34,7 @@ public class CepRestService {
     @ResponseStatus(HttpStatus.OK)
     @RequestMapping(value = "/{cep}", method = RequestMethod.GET)
     public CepResponse getCep(@PathVariable String cep) {
+       // String correlationId = UUID.randomUUID().toString();
 
         CepResponse retorno =  cepService.getCep(cep);
 

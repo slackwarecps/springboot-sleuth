@@ -2,22 +2,10 @@
     <appender name="stdout" class="ch.qos.logback.core.ConsoleAppender">
         <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
 <!--            <patternx>arquivoxml=%-4r [%t] %5p %c{1} - %m - tx.id=%X{transaction.id} tx.owner=%X{transaction.owner}  %n  </patternx>-->
-            <pattern>linha => datetime=%d{dd-MM-yyyy HH:mm:ss.SSS}
-                tempoRelativo=%-4r ms
-                %cyan(classe=%c{0})
-                %thread
-                %highlight(mensagem=%m)
-                %yellow(XcorrelationId=%X{correlation.id})
-                %red(session=%X{sessao.id})
-                %logger{36}
-                ${appName:-},
-                %X{Correlation-Id:-},
-                %X{traceId:-},
-                %X{spanId:-}%n
-                %n</pattern>
+            <pattern>linha => datetime=%d{dd-MM-yyyy HH:mm:ss.SSS} %cyan(classe=%logger{36})  %yellow(XcorrelationId=%X{correlation.id}) %red(session=%X{sessao.id})  %X{Correlation-Id:-}, trace=%X{traceId:-}, span=%X{spanId:-} - %highlight(mensagem=%m) %n</pattern>
         </encoder>
     </appender>
-    <root level="INFO">
+    <root level="DEBUG">
         <appender-ref ref="stdout" />
     </root>
 </configuration>
